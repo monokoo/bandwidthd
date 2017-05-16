@@ -84,6 +84,8 @@ void bd_CollectingData(char *filename)
 		fprintf(index, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
 		fprintf(index, "<HTML><HEAD><TITLE>Bandwidthd</TITLE>\n");
 
+		fprintf(index, "<link rel="stylesheet" href="css/bootstrap.min.css">\n");
+		fprintf(index, "<link rel="stylesheet" href="css/self.css">\n");
 		if (config.meta_refresh)
 			fprintf(index, "<META HTTP-EQUIV=\"REFRESH\" content=\"%u\">\n",
 					config.meta_refresh);
