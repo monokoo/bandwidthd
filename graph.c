@@ -147,7 +147,7 @@ void PrintTableLine(FILE *stream, struct SummaryData *Data, int Counter)
 
 	// First convert the info to nice, human readable stuff
 	if (Data->IP == 0)
-		strcpy(Buffer1, "Total");
+		strcpy(Buffer1, "全网合计");
 	else
 		HostIp2CharIp(Data->IP, Buffer1);
 
@@ -235,15 +235,16 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 
 	switch (config.tag)
 		{
-		case '1': PeriodDesc = "Daily"; break;
-		case '2': PeriodDesc = "Weekly"; break;
-		case '3': PeriodDesc = "Monthly"; break;
-		case '4': PeriodDesc = "Yearly"; break;
+		case '1': PeriodDesc = "本天"; break;
+		case '2': PeriodDesc = "本周"; break;
+		case '3': PeriodDesc = "本月"; break;
+		case '4': PeriodDesc = "本年"; break;
 		default: PeriodDesc = ""; break;
 		}
 	
-	fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
-	fprintf(file, "<HTML>\n<HEAD>\n<TITLE>Bandwidthd</TITLE>\n");
+	fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//CN\">\n");
+	fprintf(file, "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n");
+	fprintf(file, "<HTML>\n<HEAD>\n<TITLE>LEDE流量统计-by fw867</TITLE>\n");
 
 	fprintf(file, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
 	fprintf(file, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");	
@@ -252,16 +253,16 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 				config.meta_refresh);
 	fprintf(file, "<META HTTP-EQUIV=\"EXPIRES\" content=\"-1\">\n");
 	fprintf(file, "<META HTTP-EQUIV=\"PRAGMA\" content=\"no-cache\">\n");
-	fprintf(file, "</HEAD>\n<BODY vlink=blue>\n%s<br>\n<center><img src=\"logo.gif\" ALT=\"Logo\"><BR>\n", ctime(&WriteTime));
-	fprintf(file, "Programmed by David Hinkle, Commissioned by <a href=\"http://www.derbytech.com\">DerbyTech</a> wireless networking.<BR>");
-	fprintf(file, "<BR>\n - <a href=\"index.html\">Daily</a> -- <a href=\"index2.html\">Weekly</a> -- ");
-	fprintf(file, "<a href=\"index3.html\">Monthly</a> -- <a href=\"index4.html\">Yearly</a> - <BR>\n");
+	fprintf(file, "</HEAD>\n<BODY vlink=blue>\n%s<br>\n", ctime(&WriteTime));
+	fprintf(file, "<center>LEDE流量统计<BR>");
+	fprintf(file, "<BR>\n - <a href=\"index.html\">本日流量查看</a> -- <a href=\"index2.html\">本周流量查看</a> -- ");
+	fprintf(file, "<a href=\"index3.html\">本月流量查看</a> -- <a href=\"index4.html\">本年流量查看</a> - <BR>\n");
 
-	fprintf(file, "<BR>\nPick a Subnet:<BR>\n");	
+	fprintf(file, "<BR>\n选择一个子网地址:<BR>\n");	
 	if (config.tag == '1')
-		fprintf(file, "- <a href=\"index.html\">Top20</a> -");
+		fprintf(file, "- <a href=\"index.html\">排名前20</a> -");
 	else
-		fprintf(file, "- <a href=\"index%c.html\">Top20</a> -", config.tag);
+		fprintf(file, "- <a href=\"index%c.html\">排名前20</a> -", config.tag);
 
 	for (Counter = 0; Counter < SubnetCount; Counter++)            
 		{
@@ -271,12 +272,12 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 
 	/////  TOP 20
 
-	fprintf(file, "<H1>Top 20 IPs by Traffic - %s</H1></center>", PeriodDesc);
-	fprintf(file, "<center>\n<table width=\"100%%\" border=1 cellspacing=0>\n");
+	fprintf(file, "<H1>排名前20的IP地址流量 - %s</H1></center>", PeriodDesc);
+	fprintf(file, "<center>\n<table class=\"table table-striped table-hover table-bordered small\" width=\"100%%\" border=1 cellspacing=0>\n");
 
     // PASS 1:  Write out the table
 
-	fprintf(file, "<TR bgcolor=lightblue><TD>Ip and Name<TD align=center>Total<TD align=center>Total Sent<TD align=center>Total Received<TD align=center>FTP<TD align=center>HTTP<TD align=center>P2P<TD align=center>TCP<TD align=center>UDP<TD align=center>ICMP\n");
+	fprintf(file, "<TR bgcolor=lightblue><TD>IP地址<TD align=center>合计<TD align=center>上传<TD align=center>下载<TD align=center>FTP流量<TD align=center>HTTP流量<TD align=center>P2P流量<TD align=center>TCP流量<TD align=center>UDP流量<TD align=center>ICMP流量\n");
 	for (Counter=0; Counter < 21 && Counter < NumIps; Counter++)
 		PrintTableLine(file, SummaryData[Counter], Counter);
 
@@ -288,15 +289,15 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 			{
 			if (SummaryData[Counter]->IP == 0)
 				{
-				strcpy(Buffer1, "Total");	
-				strcpy(HostName, "Total of all subnets");
+				strcpy(Buffer1, "全网合计");	
+				strcpy(HostName, "全网流量概览");
 				}
 			else
 				{	
 				HostIp2CharIp(SummaryData[Counter]->IP, Buffer1);
 				rdns(HostName, SummaryData[Counter]->IP);
 				}
-			fprintf(file, "<a name=\"%s-%c\"></a><H1><a href=\"#top\">(Top)</a> %s - %s</H1><BR>\nSend:<br>\n<img src=%s-%c-S.png ALT=\"Sent traffic for %s\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\nReceived:<br>\n<img src=%s-%c-R.png ALT=\"Sent traffic for %s\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
+			fprintf(file, "<a name=\"%s-%c\"></a><H1><a href=\"#top\">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
 			}
 
 	fprintf(file, "</BODY></HTML>\n");
@@ -311,8 +312,9 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 		HostIp2CharIp(SubnetTable[SubnetCounter].ip, Buffer1);
 		sprintf(Buffer2, "./htdocs/Subnet-%c-%s.html", config.tag, Buffer1);
 		file = fopen(Buffer2, "wt");
-		fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
-		fprintf(file, "<HTML>\n<HEAD><TITLE>Bandwidthd - Subnet %s</TITLE>\n", Buffer1);
+		fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//CN\">\n");
+		fprintf(file, "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n");
+		fprintf(file, "<HTML>\n<HEAD>\n<TITLE>LEDE流量统计-by fw867</TITLE>\n");
 
 		fprintf(file, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
 		fprintf(file, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");
@@ -321,18 +323,17 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 					config.meta_refresh);
 		fprintf(file, "<META HTTP-EQUIV=\"EXPIRES\" content=\"-1\">\n");
 		fprintf(file, "<META HTTP-EQUIV=\"PRAGMA\" content=\"no-cache\">\n");
-		fprintf(file, "</HEAD>\n<BODY vlink=blue>\n%s<br>\n<CENTER><a name=\"Top\"></a>", ctime(&WriteTime));
-		fprintf(file, "<img src=\"logo.gif\" ALT=\"Logo\"><BR>");
-		fprintf(file, "Programmed by David Hinkle, Commissioned by <a href=\"http://www.derbytech.com\">DerbyTech</a> wireless networking.<BR>\n");
+		fprintf(file, "</HEAD>\n<BODY vlink=blue>\n%s<br>\n", ctime(&WriteTime));
+		fprintf(file, "<center>LEDE流量统计<BR>");
 
-		fprintf(file, "<BR>\n - <a href=\"index.html\">Daily</a> -- <a href=\"index2.html\">Weekly</a> -- ");
-		fprintf(file, "<a href=\"index3.html\">Monthly</a> -- <a href=\"index4.html\">Yearly</a> - <BR>\n");
+		fprintf(file, "<BR>\n - <a href=\"index.html\">本日流量查看</a> -- <a href=\"index2.html\">本周流量查看</a> -- ");
+		fprintf(file, "<a href=\"index3.html\">本月流量查看</a> -- <a href=\"index4.html\">本年流量查看</a> - <BR>\n");
 
-		fprintf(file, "<BR>\nPick a Subnet:<BR>\n");
+		fprintf(file, "<BR>\n选择一个子网地址:<BR>\n");
 		if (config.tag == '1')
-			fprintf(file, "- <a href=\"index.html\">Top20</a> -");
+			fprintf(file, "- <a href=\"index.html\">排名前20</a> -");
 		else
-			fprintf(file, "- <a href=\"index%c.html\">Top20</a> -", config.tag);
+			fprintf(file, "- <a href=\"index%c.html\">排名前20</a> -", config.tag);
 
 		for (Counter = 0; Counter < SubnetCount; Counter++)
 			{
@@ -341,11 +342,11 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 			}
 
 		fprintf(file, "<H1>%s - %s</H1></center>", Buffer1, PeriodDesc);
-		fprintf(file, "<table width=\"100%%\" border=1 cellspacing=0>\n");
+		fprintf(file, "<table class=\"table table-striped table-hover table-bordered small\" width=\"100%%\" border=1 cellspacing=0>\n");
 
         // PASS 1:  Write out the table
 
-		fprintf(file, "<TR bgcolor=lightblue><TD>Ip and Name<TD align=center>Total<TD align=center>Total Sent<TD align=center>Total Received<TD align=center>FTP<TD align=center>HTTP<TD align=center>P2P<TD align=center>TCP<TD align=center>UDP<TD align=center>ICMP\n");
+		fprintf(file, "<TR bgcolor=lightblue><TD>IP地址<TD align=center>合计<TD align=center>上传<TD align=center>下载<TD align=center>FTP流量<TD align=center>HTTP流量<TD align=center>P2P流量<TD align=center>TCP流量<TD align=center>UDP流量<TD align=center>ICMP流量\n");
 		for (tCounter=0, Counter=0; Counter < NumIps; Counter++)
 			{
             if (SubnetTable[SubnetCounter].ip == (SummaryData[Counter]->IP & SubnetTable[SubnetCounter].mask))
@@ -365,7 +366,7 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 					{
 					HostIp2CharIp(SummaryData[Counter]->IP, Buffer1);
 					rdns(HostName, SummaryData[Counter]->IP);
-					fprintf(file, "<a name=\"%s-%c\"></a><H1><a href=\"#top\">(Top)</a> %s - %s</H1><BR>\nSend:<br>\n<img src=%s-%c-S.png ALT=\"Sent traffic graph for %s\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\nReceived:<br>\n<img src=%s-%c-R.png ALT=\"Received traffic for %s\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
+					fprintf(file, "<a name=\"%s-%c\"></a><H1><a href=\"#top\">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
 					}
 				}
 			}
@@ -391,7 +392,7 @@ void GraphIp(struct IPDataStore *DataStore, struct SummaryData *SummaryData, tim
 	// TODO: First determine if graph will be printed before creating image and drawing backround, etc
 
 	if (DataStore->ip == 0)
-		strcpy(CharIp, "Total");
+		strcpy(CharIp, "全网合计");
 	else
 		HostIp2CharIp(DataStore->ip, CharIp);
 

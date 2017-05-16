@@ -81,8 +81,9 @@ void bd_CollectingData(char *filename)
 	index = fopen(filename, "wt");	
 	if (index)
 		{
-		fprintf(index, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
-		fprintf(index, "<HTML><HEAD><TITLE>Bandwidthd</TITLE>\n");
+		fprintf(index, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//CN\">\n");
+		fprintf(index, "<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />\n");
+		fprintf(index, "<HTML>\n<HEAD>\n<TITLE>LEDE流量统计-by fw867</TITLE>\n");
 
 		fprintf(index, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
 		fprintf(index, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");
@@ -92,9 +93,9 @@ void bd_CollectingData(char *filename)
 		fprintf(index, "<META HTTP-EQUIV=\"EXPIRES\" content=\"-1\">\n");
 		fprintf(index, "<META HTTP-EQUIV=\"PRAGMA\" content=\"no-cache\">\n");
 		fprintf(index, "</HEAD>\n<BODY><center><img src=\"logo.gif\" ALT=\"Logo\"><BR>\n");
-		fprintf(index, "<BR>\n - <a href=\"index.html\">Daily</a> -- <a href=\"index2.html\">Weekly</a> -- ");
-		fprintf(index, "<a href=\"index3.html\">Monthly</a> -- <a href=\"index4.html\">Yearly</a><BR>\n");
-		fprintf(index, "</CENTER><BR>bandwidthd has nothing to graph.  This message should be replaced by graphs in a few minutes.  If it's not, please see the section titled \"Known Bugs and Troubleshooting\" in the README");		
+		fprintf(index, "<BR>\n - <a href=\"index.html\">本日流量查看</a> -- <a href=\"index2.html\">本周流量查看</a> -- ");
+		fprintf(index, "<a href=\"index3.html\">本月流量查看</a> -- <a href=\"index4.html\">本年流量查看</a><BR>\n");
+		fprintf(index, "</CENTER><BR>暂时没有流量数据可以统计。请关闭本页面等待几分钟后再来查看即可。");			
 		fprintf(index, "</BODY></HTML>\n");
 		fclose(index);
 		}
