@@ -272,7 +272,7 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 
 	/////  TOP 20
 
-	fprintf(file, "<H1 style="font-size:22px;">排名前20的IP地址流量 - %s</H1></center>", PeriodDesc);
+	fprintf(file, "<H1 style=\"font-size:22px;\">排名前20的IP地址流量 - %s</H1></center>", PeriodDesc);
 	fprintf(file, "<center>\n<table class=\"table table-striped table-hover table-bordered small\" width=\"100%%\" border=1 cellspacing=0>\n");
 
     // PASS 1:  Write out the table
@@ -297,7 +297,7 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 				HostIp2CharIp(SummaryData[Counter]->IP, Buffer1);
 				rdns(HostName, SummaryData[Counter]->IP);
 				}
-			fprintf(file, "<a name=\"%s-%c\"></a><H1 style="font-size:22px;"><a href=\"#top\" style="font-size:10px;">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
+			fprintf(file, "<a name=\"%s-%c\"></a><H1 style=\"font-size:22px;\"><a href=\"#top\" style=\"font-size:10px;\">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
 			}
 
 	fprintf(file, "</BODY></HTML>\n");
@@ -341,7 +341,7 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 			fprintf(file, "- <a href=\"Subnet-%c-%s.html\">%s</a> -", config.tag, Buffer2, Buffer2);
 			}
 
-		fprintf(file, "<H1 style="font-size:22px;">%s - %s</H1></center>", Buffer1, PeriodDesc);
+		fprintf(file, "<H1 style=\"font-size:22px;\">%s - %s</H1></center>", Buffer1, PeriodDesc);
 		fprintf(file, "<table class=\"table table-striped table-hover table-bordered small\" width=\"100%%\" border=1 cellspacing=0>\n");
 
         // PASS 1:  Write out the table
@@ -366,7 +366,7 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 					{
 					HostIp2CharIp(SummaryData[Counter]->IP, Buffer1);
 					rdns(HostName, SummaryData[Counter]->IP);
-					fprintf(file, "<a name=\"%s-%c\"></a><H1 style="font-size:22px;"><a href=\"#top\" style="font-size:10px;">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
+					fprintf(file, "<a name=\"%s-%c\"></a><H1 style=\"font-size:22px;\"><a href=\"#top\" style=\"font-size:10px;\">(返回顶部)</a> %s - %s</H1><BR>\n上传:<br>\n<img src=%s-%c-S.png ALT=\"%s上传流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n下载:<br>\n<img src=%s-%c-R.png ALT=\"%s下载流量图形\"><BR>\n<img src=legend.gif ALT=\"Legend\"><br>\n<BR>\n", Buffer1, config.tag, Buffer1, HostName, Buffer1, config.tag, Buffer1, Buffer1, config.tag, Buffer1);
 					}
 				}
 			}
