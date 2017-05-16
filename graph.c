@@ -245,8 +245,8 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 	fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
 	fprintf(file, "<HTML>\n<HEAD>\n<TITLE>Bandwidthd</TITLE>\n");
 
-	fprintf(index, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
-	fprintf(index, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");	
+	fprintf(file, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
+	fprintf(file, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");	
 	if (config.meta_refresh)
 		fprintf(file, "<META HTTP-EQUIV=\"REFRESH\" content=\"%u\">\n",
 				config.meta_refresh);
@@ -314,8 +314,8 @@ void MakeIndexPages(int NumIps, struct SummaryData *SummaryData[])
 		fprintf(file, "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n");
 		fprintf(file, "<HTML>\n<HEAD><TITLE>Bandwidthd - Subnet %s</TITLE>\n", Buffer1);
 
-		fprintf(index, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
-		fprintf(index, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");
+		fprintf(file, "<link rel=\"stylesheet\" href=\"css/bootstrap.min.css\">\n");
+		fprintf(file, "<link rel=\"stylesheet\" href=\"css/self.css\">\n");
 		if (config.meta_refresh)
 			fprintf(file, "<META HTTP-EQUIV=\"REFRESH\" content=\"%u\">\n",
 					config.meta_refresh);
