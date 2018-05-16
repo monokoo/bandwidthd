@@ -536,7 +536,7 @@ void PacketCallback(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
         }
     }
 
-inline void Credit(struct Statistics *Stats, const struct ip *ip)
+void Credit(struct Statistics *Stats, const struct ip *ip)
     {
     unsigned long size;
     const struct tcphdr *tcp;
@@ -1222,7 +1222,7 @@ void RecoverDataFromCDF(void)
 // ****** FindIp **********
 // ****** Returns or allocates an Ip's data structure
 
-inline struct IPData *FindIp(uint32_t ipaddr)
+struct IPData *FindIp(uint32_t ipaddr)
     {
     unsigned int counter;
     
