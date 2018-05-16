@@ -17,7 +17,7 @@ NONWALLCFLAGS= @CFLAGS@ @CPPFLAGS@ @DEFS@
 all: bandwidthd
 
 bandwidthd: $(OBS) bandwidthd.h
-	$(CC) $(CFLAGS) $(OBS) -o bandwidthd $(LDFLAGS) 
+	$(CC) $(CFLAGS) $(OBS) -o bandwidthd bandwidthd.c $(LDFLAGS) 
 
 conf.tab.c: conf.y
 	@YACC@ -pbdconfig_ -d conf.y
